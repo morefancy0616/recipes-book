@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모어펜시 레시피 모음.zip</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap');
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #FAFAF7;
+    --white: #FFFFFF;
+    --text: #1A1A1A;
+    --text-mid: #555;
+    --text-light: #999;
+    --border: #EBEBEB;
+
+    /* 카드 컬러 */
+    --egg: #F5A623;
+    --egg-light: #FEF6E4;
+    --smoothie: #6B4FA0;
+    --smoothie-light: #F0EBF8;
+    --slowaging: #C0785A;
+    --slowaging-light: #FAF0EB;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 12px 24px 20px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: 'Gaegu', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .header-title span {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #F5A623, #C0785A, #6B4FA0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* SEARCH */
+  .search-wrap {
+    padding: 0 24px 20px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 18px;
+    gap: 10px;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus-within {
+    border-color: #C0785A;
+  }
+  .search-icon { font-size: 16px; color: var(--text-light); flex-shrink: 0; }
+  .search-input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Pretendard', sans-serif;
+    color: var(--text);
+    background: transparent;
+    width: 100%;
+  }
+  .search-input::placeholder { color: var(--text-light); }
+  .search-clear {
+    font-size: 13px;
+    color: var(--text-light);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Pretendard', sans-serif;
+    display: none;
+    flex-shrink: 0;
+  }
+
+  /* NO RESULT */
+  .no-result {
+    display: none;
+    text-align: center;
+    padding: 40px 0;
+    color: var(--text-light);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .no-result-emoji { font-size: 36px; margin-bottom: 10px; display: block; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 24px 24px;
+    max-width: 472px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* RECIPE CARDS */
+  .cards {
+    padding: 0 24px 40px;
+    max-width: 520px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  .card-top {
+    padding: 20px 20px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .card-icon.egg { background: var(--egg-light); }
+  .card-icon.smoothie { background: var(--smoothie-light); }
+  .card-icon.slowaging { background: var(--slowaging-light); }
+
+  .card-info { flex: 1; }
+  .card-category {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .card-category.egg { color: var(--egg); }
+  .card-category.smoothie { color: var(--smoothie); }
+  .card-category.slowaging { color: var(--slowaging); }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .card-arrow {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .card-bottom {
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .tag.egg { background: var(--egg-light); color: var(--egg); }
+  .tag.smoothie { background: var(--smoothie-light); color: var(--smoothie); }
+  .tag.slowaging { background: var(--slowaging-light); color: var(--slowaging); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 0 24px 36px;
+    font-size: 11px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<!-- 쿠팡 파트너스 -->
+<div style="background:#FAFAF7;text-align:center;padding:8px 16px;font-size:11px;color:#999;line-height:1.6;">
+  이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <p class="header-eyebrow">MOREFANCY RECIPES</p>
+  <h1 class="header-title">모어펜시 <span>레시피 모음.zip</span></h1>
+  <p class="header-sub">건강하고 간단한 레시피만 모았어요 🤍</p>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="레시피 검색 (예: 계란, 다이어트, 저속노화)" oninput="handleSearch(this.value)" />
+    <button class="search-clear" id="clearBtn" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="cards">
+
+  <!-- 야채 계란빵 -->
+  <a class="card" href="https://morefancy0616.github.io/egg-recipes/" target="_blank"
+     data-keywords="야채 계란빵 계란 아침 성장기 밀가루 단백질 칼슘 아이 10분">
+    <div class="card-top">
+      <div class="card-icon egg">🥚</div>
+      <div class="card-info">
+        <p class="card-category egg">아침 · 성장기</p>
+        <p class="card-title">야채 계란빵 레시피</p>
+        <p class="card-desc">밀가루 설탕 없이 10분 뚝딱<br>입 짧은 아이도 3장 싹 비우는 레시피</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card-bottom">
+      <span class="tag egg">🚫 밀가루 제로</span>
+      <span class="tag egg">💪 단백질·칼슘</span>
+      <span class="tag egg">⏱️ 10분</span>
+    </div>
+  </a>
+
+  <!-- 묵은변 스무디 -->
+  <a class="card" href="https://morefancy0616.github.io/banana-smoothie/" target="_blank"
+     data-keywords="묵은변 스무디 다이어트 장건강 바나나 요거트 체지방 붓기 독소 7kg">
+    <div class="card-top">
+      <div class="card-icon smoothie">🍌</div>
+      <div class="card-info">
+        <p class="card-category smoothie">다이어트 · 장건강</p>
+        <p class="card-title">-7kg 묵은변 콸콸 레시피</p>
+        <p class="card-desc">매일 아침 한 잔으로<br>체지방·독소·붓기 한번에 관리</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card-bottom">
+      <span class="tag smoothie">✔ 체지방 관리</span>
+      <span class="tag smoothie">✔ 붓기 관리</span>
+      <span class="tag smoothie">✔ 장 비움</span>
+    </div>
+  </a>
+
+  <!-- 이소라 저속노화 -->
+  <a class="card" href="https://morefancy0616.github.io/slowaging-recipes/" target="_blank"
+     data-keywords="이소라 저속노화 동안 노화 오트밀 우유 포만감 5분 58세 면역">
+    <div class="card-top">
+      <div class="card-icon slowaging">✨</div>
+      <div class="card-info">
+        <p class="card-category slowaging">저속노화 · 동안</p>
+        <p class="card-title">이소라 저속노화 레시피</p>
+        <p class="card-desc">58세 동안 미모의 비결<br>냄비에 넣고 5분이면 완성</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card-bottom">
+      <span class="tag slowaging">✨ 저속노화</span>
+      <span class="tag slowaging">💪 포만감</span>
+      <span class="tag slowaging">⏱️ 5분</span>
+    </div>
+  </a>
+
+  <!-- NO RESULT -->
+  <div class="no-result" id="noResult">
+    <span class="no-result-emoji">🔍</span>
+    검색 결과가 없어요<br>
+    <span style="font-size:12px;">다른 키워드로 검색해 보세요</span>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  © 모어펜시 레시피 모음
+</div>
+
+<script>
+  function handleSearch(val) {
+    const query = val.trim().toLowerCase();
+    const cards = document.querySelectorAll('.card');
+    const clearBtn = document.getElementById('clearBtn');
+    const noResult = document.getElementById('noResult');
+    let visibleCount = 0;
+
+    clearBtn.style.display = query ? 'block' : 'none';
+
+    cards.forEach(card => {
+      const keywords = card.getAttribute('data-keywords') || '';
+      const title = card.querySelector('.card-title').textContent;
+      const desc = card.querySelector('.card-desc').textContent;
+      const searchText = (keywords + ' ' + title + ' ' + desc).toLowerCase();
+
+      if (!query || searchText.includes(query)) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    noResult.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  function clearSearch() {
+    const input = document.querySelector('.search-input');
+    input.value = '';
+    handleSearch('');
+    input.focus();
+  }
+</script>
+
+</body>
+</html>
